@@ -8,11 +8,14 @@ import { AlbumsController } from './albums/albums.controller';
 import { Album, AlbumSchema } from './schemas/album.schema';
 import { TracksController } from './tracks/tracks.controller';
 import { Track, TrackSchema } from './schemas/track.schema';
+import { UsersController } from './users/users.controller';
+import { User, UserSchema } from './schemas/user.schema';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/wave'),
     MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
       { name: Artist.name, schema: ArtistsSchema },
       { name: Album.name, schema: AlbumSchema },
       { name: Track.name, schema: TrackSchema },
@@ -23,6 +26,7 @@ import { Track, TrackSchema } from './schemas/track.schema';
     ArtistsController,
     AlbumsController,
     TracksController,
+    UsersController,
   ],
   providers: [AppService],
 })
