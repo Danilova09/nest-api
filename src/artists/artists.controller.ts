@@ -37,10 +37,9 @@ export class ArtistsController {
   }
 
   @Post(':id/publish')
-  publishArtist(@Param('id') id: string) {
-    const filter = { _id: id };
-    const params = { isPublished: true };
-    const artist = this.artistModel.findOneAndUpdate(filter, params);
+  async publishArtist(@Param('id') id: string) {
+    const artist = await this.artistModel.findById(id);
+    artist.set({ isPublished: true });
     return artist;
   }
 
@@ -50,10 +49,10 @@ export class ArtistsController {
       return { error: 'Incorrect id' };
     }
 
-    const artist = this.artistModel.findById(id);
+    const artist = await this.artistModel.findById(id);
 
     if (!artist) {
-      return { error: 'Artist with id = ' + id + ' wasnt found!' };
+      return { error: 'Artist with id = ' + id + ' not found!' };
     }
 
     await this.artistModel.findByIdAndRemove(id);
